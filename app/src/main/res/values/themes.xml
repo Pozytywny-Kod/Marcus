@@ -6,4 +6,5 @@
     </style>
 
     <style name="Theme.ProjectMarcus" parent="Base.Theme.ProjectMarcus" />
+    <style name="Theme.SideNavbar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ProjectMarcus</string>
+    <string name="hello_user">Hello user</string>
+    <string name="action_settings">Settings</string>
 </resources>
