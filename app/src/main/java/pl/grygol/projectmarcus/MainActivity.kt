@@ -76,13 +76,13 @@ class MainActivity : AppCompatActivity(),Navigable {
     private fun prepareExpandableListData(): LinkedHashMap<String, List<String>> {
         val listData = LinkedHashMap<String, List<String>>()
 
-        val group1 = "Group 1"
-        val group2 = "Group 2"
-        val group3 = "Group 3"
+        val group1 = "Zespoły"
+        val group2 = "Projekty"
+        val group3 = "Ostatnie skany"
 
-        val group1Items = listOf("Item 1", "Item 2", "Item 3")
-        val group2Items = listOf("Item 4", "Item 5", "Item 6")
-        val group3Items = listOf("Item 7", "Item 8", "Item 9")
+        val group1Items = listOf("Zespół 1", "Zespół 2", "Zespół 3")
+        val group2Items = listOf("Projekt 1", "Projekt 2", "Projekt 3")
+        val group3Items = listOf("Skan 7", "Skan 8")
 
         listData[group1] = group1Items
         listData[group2] = group2Items

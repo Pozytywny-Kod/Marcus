@@ -44,7 +44,8 @@
             android:divider="@android:color/darker_gray"
             android:dividerHeight="0.5dp"
             android:background="@android:color/white"
-            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+            android:groupIndicator="@null"/>
 
         <Button
             android:layout_width="match_parent"
