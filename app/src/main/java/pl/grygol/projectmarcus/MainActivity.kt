@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import pl.grygol.projectmarcus.Adapters.ExpandableListAdapter
+import pl.grygol.projectmarcus.Fragments.DashboardFragment
 import pl.grygol.projectmarcus.Fragments.ProjectDetailsFragment
 import pl.grygol.projectmarcus.Interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
@@ -16,6 +17,7 @@ import pl.grygol.projectmarcus.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(),Navigable {
 
     private lateinit var projectDetailsFragment: ProjectDetailsFragment
+    private lateinit var dashboardFragment: DashboardFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
@@ -26,7 +28,6 @@ class MainActivity : AppCompatActivity(),Navigable {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
-
         setupViews()
         setupToolbar()
         setupNavigationDrawer()
@@ -39,6 +40,11 @@ class MainActivity : AppCompatActivity(),Navigable {
         val headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
         binding.expandableListView.addHeaderView(headerView)
         binding.expandableListView.setAdapter(expandableListAdapter)
+
+        dashboardFragment = DashboardFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+            .commit()
     }
 
     private fun setupToolbar() {
@@ -88,10 +94,15 @@ class MainActivity : AppCompatActivity(),Navigable {
     override fun navigate(to: Navigable.Destination) {
         supportFragmentManager.beginTransaction().apply {
         when(to){
+            Navigable.Destination.Dashboard -> {
+                replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+                addToBackStack(projectDetailsFragment.javaClass.name)
+            }
             Navigable.Destination.ProjectDetails -> {
                 replace(R.id.container, projectDetailsFragment, projectDetailsFragment.javaClass.name)
                 addToBackStack(projectDetailsFragment.javaClass.name)
             }
+
         }.commit()
         }
     }

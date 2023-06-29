@@ -2,15 +2,24 @@
     <string name="app_name">ProjectMarcus</string>
     <string name="hello_user">Hello user</string>
     <string name="action_settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Closed</string>
-    <string name="wyloguj_się">Wyloguj się</string>
-    <string name="ExpenseName">Piżama</string>
-    <string name="ExpenseDate">16.08.2023</string>
-    <string name="ExpenseLabel">Kwota wydatku:</string>
+    <string name="sign_out">Wyloguj się</string>
+    <string name="expense_name">Piżama</string>
+    <string name="expense_date">16.08.2023</string>
+    <string name="expense_label">Kwota wydatku:</string>
     <string name="avatar">avatar</string>
-    <string name="Price">23,08 zł</string>
-    <string name="ExpenseDetailsButtonContent">Szczegóły</string>
+    <string name="price">23,08 zł</string>
+    <string name="expense_details_button">Szczegóły</string>
+    <string name="project_name">Projekt Ulubiony</string>
+    <string name="company_name">Franwear S.A.</string>
+    <string name="last_expenses_label">Ostatnie wydatki</string>
+    <string name="last_expenses_label_information">Wydatki z ostatnich 30 dni</string>
+    <string name="last_expenses_value">23.08 zł</string>
+    <string name="your_expenses_label">Twoje wydatki</string>
+    <string name="your_expenses_value">12,50 zł</string>
+    <string name="rest_of_budget_value">-150.21 zł</string>
+    <string name="rest_of_budget_label">Pozostały budżet</string>
+    <string name="add_new_expense_button">Dodaj nowy wydatek</string>
 </resources>

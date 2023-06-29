@@ -10,4 +10,8 @@ object DataSource {
             LocalDate.of(2023,8,17)
         )
     )
+    val projects = mutableListOf<Project>(
+        Project(),
+        Project(),
+    )
 }
