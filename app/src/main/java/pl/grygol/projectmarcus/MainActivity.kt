@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -16,26 +15,34 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
-    private lateinit var header: View
-    private lateinit var footer: View
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityMainBinding.inflate(layoutInflater).apply {
+            setContentView(root)
+        }
 
+        setupViews()
+        setupToolbar()
+        setupNavigationDrawer()
+    }
+
+    private fun setupViews() {
         expandableListAdapter = ExpandableListAdapter(this, prepareExpandableListData())
 
-        header = LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
-
-        binding.expandableListView.addHeaderView(header)
+        val headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
+        binding.expandableListView.addHeaderView(headerView)
         binding.expandableListView.setAdapter(expandableListAdapter)
+    }
 
-        toolbar = findViewById(R.id.toolbar)
+    private fun setupToolbar() {
+        toolbar = binding.toolbar
         setSupportActionBar(toolbar)
+    }
 
+    private fun setupNavigationDrawer() {
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar,
@@ -43,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -52,9 +58,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        return super.onOptionsItemSelected(item)
+        return when (item.itemId) {
+            // Handle menu item selections here
+            else -> super.onOptionsItemSelected(item)
+        }
     }
+
     private fun prepareExpandableListData(): LinkedHashMap<String, List<String>> {
         val listData = LinkedHashMap<String, List<String>>()
 
