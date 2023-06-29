@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity(),Navigable {
         setupViews()
         setupToolbar()
         setupNavigationDrawer()
+
     }
 
     private fun setupViews() {
