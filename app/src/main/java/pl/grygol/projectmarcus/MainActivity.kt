@@ -9,10 +9,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import pl.grygol.projectmarcus.Adapters.ExpandableListAdapter
+import pl.grygol.projectmarcus.Fragments.ProjectDetailsFragment
+import pl.grygol.projectmarcus.Interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),Navigable {
 
+    private lateinit var projectDetailsFragment: ProjectDetailsFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
@@ -59,7 +62,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            // Handle menu item selections here
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -80,5 +82,16 @@ class MainActivity : AppCompatActivity() {
         listData[group3] = group3Items
 
         return listData
+    }
+
+    override fun navigate(to: Navigable.Destination) {
+        supportFragmentManager.beginTransaction().apply {
+        when(to){
+            Navigable.Destination.ProjectDetails -> {
+                replace(R.id.container, projectDetailsFragment, projectDetailsFragment.javaClass.name)
+                addToBackStack(projectDetailsFragment.javaClass.name)
+            }
+        }.commit()
+        }
     }
 }

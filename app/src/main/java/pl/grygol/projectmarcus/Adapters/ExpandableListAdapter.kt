@@ -45,7 +45,7 @@ class ExpandableListAdapter(private val context: Context, private val expandable
         val groupTitle = getGroup(groupPosition) as String
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = convertView ?: inflater.inflate(R.layout.list_group, null)
+        val view = convertView ?: inflater.inflate(R.layout.nav_list_group, null)
 
         val titleTextView = view.findViewById<TextView>(R.id.listTitle)
         titleTextView.text = groupTitle
@@ -58,7 +58,7 @@ class ExpandableListAdapter(private val context: Context, private val expandable
         val childTitle = getChild(groupPosition, childPosition) as String
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = convertView ?: inflater.inflate(R.layout.list_item, null)
+        val view = convertView ?: inflater.inflate(R.layout.nav_list_item, null)
 
         val titleTextView = view.findViewById<TextView>(R.id.expandableListItem)
         titleTextView.text = childTitle

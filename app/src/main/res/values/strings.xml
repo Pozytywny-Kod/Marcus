@@ -7,4 +7,6 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Closed</string>
     <string name="wyloguj_się">Wyloguj się</string>
+    <string name="ExpenseName">Piżama</string>
+    <string name="ExpenseDate">16.08.2023</string>
 </resources>
