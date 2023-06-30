@@ -1,9 +1,9 @@
-package pl.grygol.projectmarcus.Adapters
+package pl.grygol.projectmarcus.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pl.grygol.projectmarcus.Data.Expense
+import pl.grygol.projectmarcus.data.Expense
 import pl.grygol.projectmarcus.databinding.ProjectDetailsItemBinding
 
 class ExpenseViewHolder(private val binding: ProjectDetailsItemBinding) : RecyclerView.ViewHolder(binding.root) {

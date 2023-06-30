@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.Adapters
+package pl.grygol.projectmarcus.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

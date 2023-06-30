@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.Data
+package pl.grygol.projectmarcus.dataSource
 
 import java.time.LocalDate
 
