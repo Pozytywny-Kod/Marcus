@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.Interfaces
+package pl.grygol.projectmarcus.interfaces
 
 interface Navigable {
     enum class Destination {

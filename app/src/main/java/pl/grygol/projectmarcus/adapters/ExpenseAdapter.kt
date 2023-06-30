@@ -1,5 +1,4 @@
-package pl.grygol.projectmarcus.adapter
-
+package pl.grygol.projectmarcus.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

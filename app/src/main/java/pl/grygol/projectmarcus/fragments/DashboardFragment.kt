@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import pl.grygol.projectmarcus.adapter.ProjectAdapter
+import pl.grygol.projectmarcus.adapters.ProjectAdapter
 import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.FragmentProjectListBinding
 

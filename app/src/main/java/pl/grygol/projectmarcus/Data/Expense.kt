@@ -1,6 +1,7 @@
 package pl.grygol.projectmarcus.data
 
 import java.time.LocalDate
+import java.util.Date
 
 data class Expense (
     val id: Int,

@@ -9,10 +9,10 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import pl.grygol.projectmarcus.adapter.ExpandableListAdapter
+import pl.grygol.projectmarcus.adapters.ExpandableListAdapter
 import pl.grygol.projectmarcus.fragments.DashboardFragment
 import pl.grygol.projectmarcus.fragments.ProjectDetailsFragment
-import pl.grygol.projectmarcus.Interfaces.Navigable
+import pl.grygol.projectmarcus.interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(),Navigable {
