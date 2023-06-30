@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.adapters
+package pl.grygol.projectmarcus.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

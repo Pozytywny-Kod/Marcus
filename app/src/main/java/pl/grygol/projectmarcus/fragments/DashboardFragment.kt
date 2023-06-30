@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.Fragments
+package pl.grygol.projectmarcus.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import pl.grygol.projectmarcus.Adapters.ProjectAdapter
-import pl.grygol.projectmarcus.Data.DataSource
+import pl.grygol.projectmarcus.adapter.ProjectAdapter
+import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.FragmentProjectListBinding
 
 class DashboardFragment : Fragment() {
@@ -29,11 +29,11 @@ class DashboardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        adapter = ProjectAdapter()
         setupViews()
     }
 
     private fun setupViews() {
-        adapter = ProjectAdapter()
         binding.projectList.let {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(requireContext())

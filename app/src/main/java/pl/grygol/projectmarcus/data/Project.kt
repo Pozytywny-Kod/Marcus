@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.dataSource
+package pl.grygol.projectmarcus.data
 
 class Project {
 }

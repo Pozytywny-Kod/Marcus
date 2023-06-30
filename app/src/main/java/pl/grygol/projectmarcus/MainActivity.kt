@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
-import pl.grygol.projectmarcus.Adapters.ExpandableListAdapter
-import pl.grygol.projectmarcus.Fragments.DashboardFragment
-import pl.grygol.projectmarcus.Fragments.ProjectDetailsFragment
+import pl.grygol.projectmarcus.adapter.ExpandableListAdapter
+import pl.grygol.projectmarcus.fragments.DashboardFragment
+import pl.grygol.projectmarcus.fragments.ProjectDetailsFragment
 import pl.grygol.projectmarcus.Interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
 
@@ -37,7 +38,8 @@ class MainActivity : AppCompatActivity(),Navigable {
     private fun setupViews() {
         expandableListAdapter = ExpandableListAdapter(this, prepareExpandableListData())
 
-        val headerView = LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
+        val headerView =
+            LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
         binding.expandableListView.addHeaderView(headerView)
         binding.expandableListView.setAdapter(expandableListAdapter)
 
@@ -93,17 +95,30 @@ class MainActivity : AppCompatActivity(),Navigable {
 
     override fun navigate(to: Navigable.Destination) {
         supportFragmentManager.beginTransaction().apply {
-        when(to){
-            Navigable.Destination.Dashboard -> {
-                replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
-                addToBackStack(projectDetailsFragment.javaClass.name)
-            }
-            Navigable.Destination.ProjectDetails -> {
-                replace(R.id.container, projectDetailsFragment, projectDetailsFragment.javaClass.name)
-                addToBackStack(projectDetailsFragment.javaClass.name)
-            }
+            when (to) {
+                Navigable.Destination.Dashboard -> {
+                    replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+                    addToBackStack(projectDetailsFragment.javaClass.name)
+                }
 
-        }.commit()
+                Navigable.Destination.ProjectDetails -> {
+                    replace(
+                        R.id.container,
+                        projectDetailsFragment,
+                        projectDetailsFragment.javaClass.name
+                    )
+                    addToBackStack(projectDetailsFragment.javaClass.name)
+                }
+
+            }.commit()
         }
+    }
+
+    fun showPopup(v: View) {
+//        val popup = PopupMenu(this, v)
+//        val inflater: MenuInflater = popup.menuInflater
+//        inflater.inflate(R.menu.actions, popup.menu)
+//        popup.show()
+
     }
 }

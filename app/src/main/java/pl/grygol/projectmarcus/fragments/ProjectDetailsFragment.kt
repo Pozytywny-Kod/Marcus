@@ -1,4 +1,4 @@
-package pl.grygol.projectmarcus.Fragments
+package pl.grygol.projectmarcus.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import pl.grygol.projectmarcus.Adapters.ExpenseAdapter
-import pl.grygol.projectmarcus.Data.DataSource
+import pl.grygol.projectmarcus.adapter.ExpenseAdapter
+import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.FragmentExpenseListBinding
 
 

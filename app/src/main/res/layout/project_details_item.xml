@@ -75,6 +75,16 @@
                     app:layout_constraintStart_toStartOf="@+id/expenseName"
                     app:layout_constraintTop_toBottomOf="@+id/expenseName" />
 
+                <ImageView
+                    android:id="@+id/menuIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_menu"
+                    app:layout_constraintBottom_toTopOf="@+id/expenseDate"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
