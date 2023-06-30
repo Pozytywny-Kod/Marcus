@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import pl.grygol.projectmarcus.adapters.ProjectAdapter
 import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.FragmentProjectListBinding
+import pl.grygol.projectmarcus.interfaces.Navigable
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentProjectListBinding
@@ -37,6 +38,10 @@ class DashboardFragment : Fragment() {
         binding.projectList.let {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(requireContext())
+        }
+        binding.btnAdd.setOnClickListener {
+            //change later to firstly go to photo screen
+            (activity as? Navigable)?.navigate(Navigable.Destination.NewExpense)
         }
     }
     override fun onStart() {

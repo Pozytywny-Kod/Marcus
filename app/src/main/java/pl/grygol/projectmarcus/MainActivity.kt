@@ -16,11 +16,14 @@ import pl.grygol.projectmarcus.fragments.DashboardFragment
 import pl.grygol.projectmarcus.fragments.ProjectDetailsFragment
 import pl.grygol.projectmarcus.interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
+import pl.grygol.projectmarcus.fragments.NewExpenseFormFragment
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.*
 
 class MainActivity : AppCompatActivity(),Navigable {
 
     private lateinit var projectDetailsFragment: ProjectDetailsFragment
     private lateinit var dashboardFragment: DashboardFragment
+    private lateinit var newExpenseFormFragment: NewExpenseFormFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
@@ -49,6 +52,7 @@ class MainActivity : AppCompatActivity(),Navigable {
         supportFragmentManager.beginTransaction()
             .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
             .commit()
+        newExpenseFormFragment = NewExpenseFormFragment()
     }
 
     private fun setupToolbar() {
@@ -98,12 +102,12 @@ class MainActivity : AppCompatActivity(),Navigable {
     override fun navigate(to: Navigable.Destination) {
         supportFragmentManager.beginTransaction().apply {
             when (to) {
-                Navigable.Destination.Dashboard -> {
+                Dashboard -> {
                     replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
                     addToBackStack(projectDetailsFragment.javaClass.name)
                 }
 
-                Navigable.Destination.ProjectDetails -> {
+                ProjectDetails -> {
                     replace(
                         R.id.container,
                         projectDetailsFragment,
@@ -112,6 +116,14 @@ class MainActivity : AppCompatActivity(),Navigable {
                     addToBackStack(projectDetailsFragment.javaClass.name)
                 }
 
+                NewExpense -> {
+                    replace(
+                        R.id.container,
+                        newExpenseFormFragment,
+                        newExpenseFormFragment.javaClass.name
+                    )
+                    addToBackStack(newExpenseFormFragment.javaClass.name)
+                }
             }.commit()
         }
     }
