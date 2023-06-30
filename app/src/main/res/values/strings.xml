@@ -22,4 +22,6 @@
     <string name="rest_of_budget_value">-150.21 zł</string>
     <string name="rest_of_budget_label">Pozostały budżet</string>
     <string name="add_new_expense_button">Dodaj nowy wydatek</string>
+    <string name="edit">Edytuj widok</string>
+    <string name="pin">Przypnij</string>
 </resources>

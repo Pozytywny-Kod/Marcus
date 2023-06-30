@@ -3,10 +3,12 @@ package pl.grygol.projectmarcus
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import pl.grygol.projectmarcus.adapters.ExpandableListAdapter
@@ -115,10 +117,9 @@ class MainActivity : AppCompatActivity(),Navigable {
     }
 
     fun showPopup(v: View) {
-//        val popup = PopupMenu(this, v)
-//        val inflater: MenuInflater = popup.menuInflater
-//        inflater.inflate(R.menu.actions, popup.menu)
-//        popup.show()
-
+        val popup = PopupMenu(this, v)
+        val inflater: MenuInflater = popup.menuInflater
+        inflater.inflate(R.menu.actions, popup.menu)
+        popup.show()
     }
 }

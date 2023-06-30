@@ -55,11 +55,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:layout_marginEnd="16dp"
                     android:text="@string/expense_name"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/menuIcon"
                     app:layout_constraintStart_toEndOf="@+id/expenseImage"
                     app:layout_constraintTop_toTopOf="@+id/expenseImage" />
 
@@ -81,9 +80,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="16dp"
                     android:importantForAccessibility="no"
+                    android:onClick="showPopup"
                     android:src="@drawable/ic_menu"
                     app:layout_constraintBottom_toTopOf="@+id/expenseDate"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
