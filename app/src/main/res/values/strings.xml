@@ -24,5 +24,7 @@
     <string name="add_new_expense_button">Dodaj nowy wydatek</string>
     <string name="edit">Edytuj widok</string>
     <string name="pin">Przypnij</string>
-    <string name="expense_title_hint">Expense Title</string>
+    <string name="expense_title_hint">Tytuł</string>
+    <string name="date_hint">Data wydatku</string>
+    <string name="nip_hint">NIP sprzedawcy</string>
 </resources>
