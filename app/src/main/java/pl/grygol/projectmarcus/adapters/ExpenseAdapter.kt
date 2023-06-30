@@ -7,9 +7,6 @@ import pl.grygol.projectmarcus.databinding.ProjectDetailsItemBinding
 
 class ExpenseViewHolder(private val binding: ProjectDetailsItemBinding) : RecyclerView.ViewHolder(binding.root) {
     fun bind(expense: Expense) {
-        binding.expenseName.text = expense.name
-        binding.expenseDate.text = expense.date.toString()
-        binding.expenseImage.setImageResource(android.R.drawable.ic_menu_add)
     }
 }
 
