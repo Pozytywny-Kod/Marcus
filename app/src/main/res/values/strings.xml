@@ -27,4 +27,30 @@
     <string name="expense_title_hint">Tytuł</string>
     <string name="date_hint">Data wydatku</string>
     <string name="nip_hint">NIP sprzedawcy</string>
+    <string name="shopping_place_hint">Miejsce zakupu</string>
+    <string name="description_hint">Opis</string>
+    <string name="selected_positions">Wyszczególnione pozycje</string>
+    <string name="sum">Suma</string>
+    <string name="pln">PLN</string>
+    <string name="currency_hint">Waluta</string>
+    <string name="confirm_button">Zatwierdź</string>
+    <string name="pln_item">PLN</string>
+    <string name="add_postion">Dodaj pozycje</string>
+    <string name="add_position">Dodaj pozycję</string>
+    <string name="item_name">Nazwa produktu</string>
+    <string name="price_hint">cena</string>
+
+    <string-array name="currencies">
+        <item>PLN</item>
+        <item>USD</item>
+        <item>EUR</item>
+        <item>JPY</item>
+        <item>GBP</item>
+        <item>AUD</item>
+        <item>CAD</item>
+        <item>CHF</item>
+        <item>CNH</item>
+        <item>HKD</item>
+        <item>NZD</item>
+    </string-array>
 </resources>
