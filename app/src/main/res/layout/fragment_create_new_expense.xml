@@ -177,6 +177,18 @@
                 app:layout_constraintStart_toStartOf="@+id/textInputDescriptionLayout"
                 app:layout_constraintTop_toTopOf="@+id/textInputPriceLayout" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/positions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textInputPriceLayout"
+                tools:listitem="@layout/positions_item" />
+
             <ImageView
                 android:id="@+id/addImage"
                 android:layout_width="wrap_content"
@@ -184,7 +196,8 @@
                 android:layout_marginTop="8dp"
                 android:src="@drawable/baseline_add_a_photo_24"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/textInputPriceLayout" />
+                app:layout_constraintTop_toBottomOf="@id/positions"
+                android:importantForAccessibility="no" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/images"
@@ -195,7 +208,9 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/addImage"
                 app:layout_constraintTop_toTopOf="@id/addImage"
+                tools:ignore="SpeakableTextPresentCheck"
                 tools:listitem="@layout/expense_image" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
