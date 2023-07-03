@@ -1,31 +1,19 @@
 package pl.grygol.projectmarcus.fragments
 
 import android.app.DatePickerDialog
-import android.content.AbstractThreadedSyncAdapter
 import android.content.Context
 import android.icu.util.Calendar
-import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract.Data
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import pl.grygol.projectmarcus.R
-import pl.grygol.projectmarcus.adapters.ExpenseAdapter
-import pl.grygol.projectmarcus.adapters.ExpenseImageAdapter
-import pl.grygol.projectmarcus.data.DataSource
-import pl.grygol.projectmarcus.data.ResourceUriHelper
 import pl.grygol.projectmarcus.databinding.FragmentCreateNewExpenseBinding
 
 
 class NewExpenseFormFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateNewExpenseBinding
-    private lateinit var arrayAdapter: ArrayAdapter<String>
-    private lateinit var adapter: ExpenseImageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,23 +34,9 @@ class NewExpenseFormFragment : Fragment() {
     }
 
     private fun setupViews() {
-        val context = requireContext()
         binding.textInputDateLayout.setEndIconOnClickListener {
+            val context = requireContext()
             openCalendarPicker(context)
-        }
-        val currencies = resources.getStringArray(R.array.currencies)
-        arrayAdapter = ArrayAdapter(requireContext(),R.layout.currencies_dropdown_item,currencies)
-        adapter = ExpenseImageAdapter()
-        binding.textInputCurrencyEditText.setAdapter(arrayAdapter)
-        binding.images.apply {
-            adapter = this@NewExpenseFormFragment.adapter
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        }
-        binding.addImage.setOnClickListener {
-            //change to go to taking picture view
-            DataSource.pictures.add(ResourceUriHelper.getUriFromDrawableId(context,R.drawable.baseline_add_a_photo_24))
-            adapter.replace(DataSource.pictures)
-            println(DataSource.pictures)
         }
     }
 
@@ -79,11 +53,6 @@ class NewExpenseFormFragment : Fragment() {
             }, year, month, day)
 
         datePickerDialog.show()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        adapter.replace(DataSource.pictures)
     }
 
 }
