@@ -4,8 +4,6 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import pl.grygol.projectmarcus.R
-import pl.grygol.projectmarcus.data.Project
 import pl.grygol.projectmarcus.databinding.ExpenseImageBinding
 
 class ExpenseImageViewHolder(private val binding: ExpenseImageBinding) : RecyclerView.ViewHolder(binding.root) {
