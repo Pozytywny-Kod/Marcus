@@ -11,6 +11,4 @@ object DataSource {
         Project(),
         Project(),
     )
-    val pictures = mutableListOf<Uri>()
-    val positions = mutableListOf<Position>()
 }
