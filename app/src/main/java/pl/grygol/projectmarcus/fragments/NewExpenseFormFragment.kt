@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import pl.grygol.projectmarcus.R
@@ -48,10 +47,11 @@ class NewExpenseFormFragment : Fragment() {
         val context = requireContext()
 
         //date picker control
+
         binding.textInputDateLayout.setEndIconOnClickListener {
+            val context = requireContext()
             openCalendarPicker(context)
         }
-
         // currencies control
         val currencies = resources.getStringArray(R.array.currencies)
         arrayAdapter = ArrayAdapter(requireContext(),R.layout.currencies_dropdown_item,currencies)
@@ -84,7 +84,6 @@ class NewExpenseFormFragment : Fragment() {
             it.adapter = positionAdapter
             it.layoutManager = LinearLayoutManager(requireContext())
         }
-
     }
 
     private fun openCalendarPicker(context: Context) {
@@ -107,5 +106,4 @@ class NewExpenseFormFragment : Fragment() {
         expenseImageAdapter.replace(DataSource.pictures)
         positionAdapter.replace(DataSource.positions)
     }
-
 }
