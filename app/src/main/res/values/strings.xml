@@ -35,6 +35,10 @@
     <string name="currency_hint">Waluta</string>
     <string name="confirm_button">Zatwierdź</string>
     <string name="pln_item">PLN</string>
+    <string name="add_postion">Dodaj pozycje</string>
+    <string name="add_position">Dodaj pozycję</string>
+    <string name="item_name">Nazwa produktu</string>
+    <string name="price_hint">cena</string>
 
     <string-array name="currencies">
         <item>PLN</item>
