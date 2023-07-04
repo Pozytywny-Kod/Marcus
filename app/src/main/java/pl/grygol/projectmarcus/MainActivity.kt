@@ -16,6 +16,7 @@ import pl.grygol.projectmarcus.fragments.DashboardFragment
 import pl.grygol.projectmarcus.fragments.ProjectDetailsFragment
 import pl.grygol.projectmarcus.interfaces.Navigable
 import pl.grygol.projectmarcus.databinding.ActivityMainBinding
+import pl.grygol.projectmarcus.fragments.ExpenseDetailsFragment
 import pl.grygol.projectmarcus.fragments.NewExpenseFormFragment
 import pl.grygol.projectmarcus.interfaces.Navigable.Destination.*
 
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity(),Navigable {
     private lateinit var projectDetailsFragment: ProjectDetailsFragment
     private lateinit var dashboardFragment: DashboardFragment
     private lateinit var newExpenseFormFragment: NewExpenseFormFragment
+    private lateinit var expenseDetailsFragment: ExpenseDetailsFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
@@ -53,6 +55,7 @@ class MainActivity : AppCompatActivity(),Navigable {
             .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
             .commit()
         newExpenseFormFragment = NewExpenseFormFragment()
+        expenseDetailsFragment = ExpenseDetailsFragment()
     }
 
     private fun setupToolbar() {
@@ -123,6 +126,15 @@ class MainActivity : AppCompatActivity(),Navigable {
                         newExpenseFormFragment.javaClass.name
                     )
                     addToBackStack(newExpenseFormFragment.javaClass.name)
+                }
+
+                ExpenseDetails -> {
+                    replace(
+                        R.id.container,
+                        expenseDetailsFragment,
+                        expenseDetailsFragment.javaClass.name
+                    )
+                    addToBackStack(expenseDetailsFragment.javaClass.name)
                 }
             }.commit()
         }
