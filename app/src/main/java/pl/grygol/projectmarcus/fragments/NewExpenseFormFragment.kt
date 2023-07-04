@@ -17,6 +17,7 @@ import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.data.Position
 import pl.grygol.projectmarcus.data.ResourceUriHelper
 import pl.grygol.projectmarcus.databinding.FragmentCreateNewExpenseBinding
+import pl.grygol.projectmarcus.interfaces.Navigable
 
 
 class NewExpenseFormFragment : Fragment() {
@@ -84,7 +85,9 @@ class NewExpenseFormFragment : Fragment() {
             it.adapter = positionAdapter
             it.layoutManager = LinearLayoutManager(requireContext())
         }
-
+        binding.confirmButton.setOnClickListener{
+            (activity as? Navigable)?.navigate(Navigable.Destination.ExpenseDetails)
+        }
     }
 
     private fun openCalendarPicker(context: Context) {
