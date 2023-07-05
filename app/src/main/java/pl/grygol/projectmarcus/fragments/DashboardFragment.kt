@@ -41,7 +41,7 @@ class DashboardFragment : Fragment() {
         }
         binding.btnAdd.setOnClickListener {
             //change later to firstly go to photo screen
-            (activity as? Navigable)?.navigate(Navigable.Destination.NewExpense)
+            (activity as? Navigable)?.navigate(Navigable.Destination.Camera)
         }
     }
     override fun onStart() {

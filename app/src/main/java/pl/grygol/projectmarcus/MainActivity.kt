@@ -1,5 +1,6 @@
 package pl.grygol.projectmarcus
 
+import CameraFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity(),Navigable {
     private lateinit var dashboardFragment: DashboardFragment
     private lateinit var newExpenseFormFragment: NewExpenseFormFragment
     private lateinit var expenseDetailsFragment: ExpenseDetailsFragment
+    private lateinit var cameraFragment: CameraFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity(),Navigable {
             .commit()
         newExpenseFormFragment = NewExpenseFormFragment()
         expenseDetailsFragment = ExpenseDetailsFragment()
+        cameraFragment = CameraFragment()
+        projectDetailsFragment = ProjectDetailsFragment()
     }
 
     private fun setupToolbar() {
@@ -135,6 +139,15 @@ class MainActivity : AppCompatActivity(),Navigable {
                         expenseDetailsFragment.javaClass.name
                     )
                     addToBackStack(expenseDetailsFragment.javaClass.name)
+                }
+
+                Camera -> {
+                    replace(
+                        R.id.container,
+                        cameraFragment,
+                        cameraFragment.javaClass.name
+                    )
+                    addToBackStack(cameraFragment.javaClass.name)
                 }
             }.commit()
         }
