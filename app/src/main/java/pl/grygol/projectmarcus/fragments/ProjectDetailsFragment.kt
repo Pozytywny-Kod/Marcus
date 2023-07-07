@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import pl.grygol.projectmarcus.adapters.ExpenseAdapter
 import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.FragmentExpenseListBinding
+import pl.grygol.projectmarcus.interfaces.Navigable
 
 
 class ProjectDetailsFragment : Fragment() {
@@ -32,6 +33,7 @@ class ProjectDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        DataSource.currentProjectWithExpenses?.let { adapter.replace(it.expenses) }
     }
 
     private fun setupViews() {
@@ -40,10 +42,14 @@ class ProjectDetailsFragment : Fragment() {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(requireContext())
         }
+        binding.btnAdd.setOnClickListener{
+            (context as? Navigable)?.navigate(Navigable.Destination.Camera)
+        }
     }
     override fun onStart() {
         super.onStart()
-        adapter.replace(DataSource.expenses)
+        println(DataSource.currentProjectWithExpenses)
+        DataSource.currentProjectWithExpenses?.let { adapter.replace(it.expenses) }
     }
 
 }

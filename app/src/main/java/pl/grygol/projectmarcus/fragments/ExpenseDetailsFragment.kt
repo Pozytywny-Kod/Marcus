@@ -5,19 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import pl.grygol.projectmarcus.adapters.ExpenseImageAdapter
 import pl.grygol.projectmarcus.adapters.ExpenseItemsAdapter
 import pl.grygol.projectmarcus.data.DataSource
+import pl.grygol.projectmarcus.data.database.model.ExpenseEntity
+import pl.grygol.projectmarcus.data.model.Position
 import pl.grygol.projectmarcus.databinding.FragmentExpenseDetailsBinding
 
 class ExpenseDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentExpenseDetailsBinding
-    private lateinit var expenseImageAdapter: ExpenseImageAdapter
     private lateinit var expenseItemsAdapter: ExpenseItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        expenseItemsAdapter = ExpenseItemsAdapter()
+        DataSource.currentExpense?.let { expenseItemsAdapter.replace(it.positions) }
     }
 
     override fun onCreateView(
@@ -32,20 +34,33 @@ class ExpenseDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        binding.amountValue.text = getSum(DataSource.currentExpense)
+        expenseItemsAdapter = ExpenseItemsAdapter()
+        DataSource.currentExpense?.let { expenseItemsAdapter.replace(it.positions) }
+        binding.place.text = DataSource.currentExpense?.location ?: ""
+        binding.dateInfo.text = DataSource.currentExpense?.expenseDate.toString()
+        binding.nipInfo.text = DataSource.currentExpense?.nip ?: ""
+    }
+
+    private fun getSum(currentExpense: ExpenseEntity?): CharSequence {
+        var sum = 0f
+        if (currentExpense != null) {
+            for(position: Position in currentExpense.positions){
+                    sum+=position.price
+            }
+        }
+        return sum.toString()
     }
 
     private fun setupViews() {
         val context = requireContext()
 
         //image controls
-        expenseImageAdapter = ExpenseImageAdapter()
         binding.images.apply {
-            adapter = this@ExpenseDetailsFragment.expenseImageAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         }
 
         //expense positions
-        expenseItemsAdapter = ExpenseItemsAdapter()
         binding.positions.apply {
             adapter = this@ExpenseDetailsFragment.expenseItemsAdapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -56,7 +71,6 @@ class ExpenseDetailsFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        expenseImageAdapter.replace(DataSource.pictures)
-        expenseItemsAdapter.replace(DataSource.positions)
+        DataSource.currentExpense?.let { expenseItemsAdapter.replace(it.positions) }
     }
 }

@@ -7,16 +7,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import pl.grygol.projectmarcus.adapters.ProjectAdapter
-import pl.grygol.projectmarcus.data.DataSource
+import pl.grygol.projectmarcus.data.database.Database
 import pl.grygol.projectmarcus.databinding.FragmentProjectListBinding
 import pl.grygol.projectmarcus.interfaces.Navigable
+import kotlin.concurrent.thread
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentProjectListBinding
     private lateinit var adapter: ProjectAdapter
+    private lateinit var database: Database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        database = Database.open(requireContext())
     }
 
     override fun onCreateView(
@@ -32,6 +35,16 @@ class DashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = ProjectAdapter()
         setupViews()
+        loadData()
+    }
+
+    private fun loadData() {
+        thread {
+            val projects = database.projects.getAll()
+            requireActivity().runOnUiThread {
+                adapter.replace(projects)
+            }
+        }
     }
 
     private fun setupViews() {
@@ -39,13 +52,13 @@ class DashboardFragment : Fragment() {
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(requireContext())
         }
-        binding.btnAdd.setOnClickListener {
-            //change later to firstly go to photo screen
-            (activity as? Navigable)?.navigate(Navigable.Destination.Camera)
-        }
     }
     override fun onStart() {
         super.onStart()
-        adapter.replace(DataSource.projects)
+        loadData()
+    }
+    override fun onDestroy() {
+        database.close()
+        super.onDestroy()
     }
 }
