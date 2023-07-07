@@ -8,7 +8,7 @@
     android:background="#F3E5F5">
 
     <TextView
-        android:id="@+id/restOfBudget"
+        android:id="@+id/positionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/restOfBudgetLabel"
+        android:id="@+id/positionPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

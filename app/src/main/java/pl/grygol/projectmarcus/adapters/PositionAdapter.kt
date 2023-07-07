@@ -1,8 +1,10 @@
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import pl.grygol.projectmarcus.data.Position
+import pl.grygol.projectmarcus.data.model.Position
 import pl.grygol.projectmarcus.databinding.PositionsItemBinding
 import pl.grygol.projectmarcus.databinding.PositionsItemLastBinding
 
@@ -10,10 +12,42 @@ class PositionViewHolder(private val binding: ViewBinding) :
     RecyclerView.ViewHolder(binding.root){
 
     fun bind(position: Position) {
-        // Bind your data to the views in the layout
-    }
+        when (binding) {
+            is PositionsItemBinding -> {
 
+                binding.productNameEditText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // No implementation needed
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        position.name = s.toString()
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // No implementation needed
+                    }
+                })
+
+                binding.priceEditText.addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                        // No implementation needed
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        val price = s.toString().toFloatOrNull() ?: 0f
+                        position.price = price
+                    }
+
+                    override fun afterTextChanged(s: Editable?) {
+                        // No implementation needed
+                    }
+                })
+            }
+        }
+    }
 }
+
 
 class PositionAdapter : RecyclerView.Adapter<PositionViewHolder>() {
     interface OnItemClickListener {
@@ -55,8 +89,12 @@ class PositionAdapter : RecyclerView.Adapter<PositionViewHolder>() {
     fun replace(newData: List<Position>) {
         data.clear()
         data.addAll(newData)
-        data.add(Position())
+        data.add(Position("",0f))
         notifyDataSetChanged()
+    }
+
+    fun getItem(i: Int): Position {
+        return data[i]
     }
 
     companion object {
