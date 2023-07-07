@@ -11,6 +11,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import pl.grygol.projectmarcus.adapters.ExpandableListAdapter
 import pl.grygol.projectmarcus.fragments.DashboardFragment
@@ -42,6 +43,8 @@ class MainActivity : AppCompatActivity(),Navigable {
         setupToolbar()
         setupNavigationDrawer()
 
+        navigate(Navigable.Destination.MainDashboard)
+
     }
 
     private fun setupViews() {
@@ -49,13 +52,13 @@ class MainActivity : AppCompatActivity(),Navigable {
 
         val headerView =
             LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
-        binding.expandableListView.addHeaderView(headerView)
-        binding.expandableListView.setAdapter(expandableListAdapter)
+//        binding.expandableListView.addHeaderView(headerView)
+//        binding.expandableListView.setAdapter(expandableListAdapter)
 
         dashboardFragment = DashboardFragment()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
-            .commit()
+//        supportFragmentManager.beginTransaction()
+//            .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+//            .commit()
         newExpenseFormFragment = NewExpenseFormFragment()
         expenseDetailsFragment = ExpenseDetailsFragment()
         cameraFragment = CameraFragment()
@@ -63,8 +66,13 @@ class MainActivity : AppCompatActivity(),Navigable {
     }
 
     private fun setupToolbar() {
-        toolbar = binding.toolbar
+        toolbar = binding.topAppBar
         setSupportActionBar(toolbar)
+//        binding.topAppBar.apply {
+//            setNavigationOnClickListener {
+//                binding.drawerLayout.open()
+//            }
+//        }
     }
 
     private fun setupNavigationDrawer() {
@@ -109,6 +117,11 @@ class MainActivity : AppCompatActivity(),Navigable {
     override fun navigate(to: Navigable.Destination) {
         supportFragmentManager.beginTransaction().apply {
             when (to) {
+                MainDashboard -> {
+                    replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+
+                }
+
                 Dashboard -> {
                     replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
                     addToBackStack(projectDetailsFragment.javaClass.name)
