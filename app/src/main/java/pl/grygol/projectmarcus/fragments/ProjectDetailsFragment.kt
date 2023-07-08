@@ -1,10 +1,10 @@
 package pl.grygol.projectmarcus.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import pl.grygol.projectmarcus.adapters.ExpenseAdapter
 import pl.grygol.projectmarcus.data.DataSource
@@ -16,6 +16,7 @@ class ProjectDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentExpenseListBinding
     private lateinit var adapter: ExpenseAdapter
+    private var viewCreated: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class ProjectDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
         DataSource.currentProjectWithExpenses?.let { adapter.replace(it.expenses) }
+        viewCreated = true
     }
 
     private fun setupViews() {
@@ -44,6 +46,12 @@ class ProjectDetailsFragment : Fragment() {
         }
         binding.btnAdd.setOnClickListener{
             (context as? Navigable)?.navigate(Navigable.Destination.Camera)
+        }
+    }
+
+    fun reloadData(){
+        if(viewCreated){
+            onStart()
         }
     }
     override fun onStart() {

@@ -45,6 +45,8 @@
     <string name="place">IKEA Targówek</string>
     <string name="shoes">Kapcie</string>
     <string name="shoes_price">19,99 PLN</string>
+    <string name="last_projects_label">Ostatnie projekty</string>
+    <string name="dashboard">Strona główna</string>
 
     <string-array name="currencies">
         <item>PLN</item>

@@ -1,4 +1,5 @@
 package pl.grygol.projectmarcus.fragments
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ class ExpenseDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentExpenseDetailsBinding
     private lateinit var expenseItemsAdapter: ExpenseItemsAdapter
+    private var viewCreated: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +36,26 @@ class ExpenseDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
-        binding.amountValue.text = getSum(DataSource.currentExpense)
-        expenseItemsAdapter = ExpenseItemsAdapter()
-        DataSource.currentExpense?.let { expenseItemsAdapter.replace(it.positions) }
-        binding.place.text = DataSource.currentExpense?.location ?: ""
-        binding.dateInfo.text = DataSource.currentExpense?.expenseDate.toString()
-        binding.nipInfo.text = DataSource.currentExpense?.nip ?: ""
+        viewCreated = true
+        reloadData()
+    }
+
+    fun reloadData() {
+        if (viewCreated) {
+            binding.amountValue.text = getSum(DataSource.currentExpense)
+            expenseItemsAdapter = ExpenseItemsAdapter()
+            DataSource.currentExpense?.let { expenseItemsAdapter.replace(it.positions) }
+            binding.place.text = DataSource.currentExpense?.location ?: ""
+            binding.dateInfo.text = DataSource.currentExpense?.expenseDate.toString()
+            binding.nipInfo.text = DataSource.currentExpense?.nip ?: ""
+        }
     }
 
     private fun getSum(currentExpense: ExpenseEntity?): CharSequence {
         var sum = 0f
         if (currentExpense != null) {
-            for(position: Position in currentExpense.positions){
-                    sum+=position.price
+            for (position: Position in currentExpense.positions) {
+                sum += position.price
             }
         }
         return sum.toString()
