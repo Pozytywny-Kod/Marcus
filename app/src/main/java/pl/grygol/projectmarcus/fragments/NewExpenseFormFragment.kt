@@ -5,12 +5,17 @@ import android.app.DatePickerDialog
 import android.content.Context
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.provider.ContactsContract.Data
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
 import pl.grygol.projectmarcus.R
 import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.data.model.Position
@@ -21,10 +26,11 @@ import pl.grygol.projectmarcus.data.database.dao.ExpenseDao
 import pl.grygol.projectmarcus.data.database.model.ExpenseEntity
 import pl.grygol.projectmarcus.databinding.FragmentCreateNewExpenseBinding
 import pl.grygol.projectmarcus.interfaces.Navigable
+import java.io.IOException
 import java.sql.Date
 import kotlin.concurrent.thread
 
-
+private const val TAG = "NewExpenseFormFragment"
 class NewExpenseFormFragment : Fragment() {
 
     private lateinit var binding: FragmentCreateNewExpenseBinding
@@ -49,6 +55,7 @@ class NewExpenseFormFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupViews()
+        recognizeText()
     }
 
     private fun setupViews() {
@@ -89,6 +96,7 @@ class NewExpenseFormFragment : Fragment() {
             DataSource.currentExpense = createNewExpense(binding)
             (activity as? Navigable)?.navigate(Navigable.Destination.ExpenseDetails)
         }
+
     }
 
     private fun createNewExpense(binding: FragmentCreateNewExpenseBinding): ExpenseEntity? {
@@ -137,6 +145,32 @@ class NewExpenseFormFragment : Fragment() {
             }, year, month, day)
 
         datePickerDialog.show()
+    }
+
+    private fun recognizeText(){
+        val recognizer = TextRecognition.getClient()
+        val image: InputImage?
+
+        try {
+            image = DataSource.photo?.let { InputImage.fromFilePath(requireContext(), it) }
+
+            val result = image?.let {
+                recognizer.process(it)
+                    .addOnSuccessListener { visionText ->
+                        val text = visionText.text
+                        Log.d(TAG, "recognizeText: ${text}")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e(TAG, "recognizeText: error while recognizing text", e)
+                    }
+            }
+            
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        
+
     }
 
     override fun onStart() {
