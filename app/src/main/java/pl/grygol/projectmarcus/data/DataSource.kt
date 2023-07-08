@@ -15,4 +15,5 @@ object DataSource {
     val positions = mutableListOf<Position>()
     var currentProjectWithExpenses: ProjectWithExpenses? = null
     var currentExpense: ExpenseEntity? = null
+    var currencies: String? = null
 }
