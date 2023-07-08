@@ -64,6 +64,8 @@ class NewExpenseFormFragment : Fragment() {
         arrayAdapter = ArrayAdapter(requireContext(),R.layout.currencies_dropdown_item,currencies)
         binding.textInputCurrencyEditText.setAdapter(arrayAdapter)
 
+        binding.addImage.setImageURI(DataSource.photo)
+
         binding.addImage.setOnClickListener {
             //change to go to taking picture view
             DataSource.pictures.add(ResourceUriHelper.getUriFromDrawableId(context,R.drawable.baseline_add_a_photo_24))
