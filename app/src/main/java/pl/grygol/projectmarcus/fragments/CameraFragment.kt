@@ -1,7 +1,10 @@
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.Context
 import android.content.pm.PackageManager
+import android.hardware.camera2.CameraAccessException
+import android.hardware.camera2.CameraManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -18,6 +21,7 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import pl.grygol.projectmarcus.R
 import pl.grygol.projectmarcus.data.DataSource
 import pl.grygol.projectmarcus.databinding.ActivityCameraBinding
 import pl.grygol.projectmarcus.interfaces.Navigable
@@ -33,6 +37,7 @@ class CameraFragment : Fragment() {
     private lateinit var cameraExecutor: ExecutorService
 
     private var imageCapture: ImageCapture? = null
+    private var flashlightIsOn: Boolean = false
 
     private val activityResultLauncher =
         registerForActivityResult(
@@ -90,6 +95,10 @@ class CameraFragment : Fragment() {
         }
         binding.flashButton.setOnClickListener {
             //turn on flashlight
+            switchFlashlight()
+            binding.flashButton.setImageResource(
+                if(flashlightIsOn) R.drawable.ic_flashlight_off else R.drawable.ic_flashlight_on
+            )
         }
         binding.skipButton.setOnClickListener {
             (activity as? Navigable)?.navigate(Navigable.Destination.NewExpense)
@@ -171,6 +180,17 @@ class CameraFragment : Fragment() {
             }
         })
 
+    }
+
+    private fun switchFlashlight(){
+        val cameraManager = requireContext().getSystemService(Context.CAMERA_SERVICE) as CameraManager
+        val cameraId = cameraManager.cameraIdList[0]
+        try {
+            cameraManager.setTorchMode(cameraId, !flashlightIsOn)
+            flashlightIsOn = !flashlightIsOn
+        } catch (ex: CameraAccessException) {
+            Log.e(TAG, "switchFlashlight: Error turning on flashlight: ${ex}", )
+        }
     }
 
     companion object {
