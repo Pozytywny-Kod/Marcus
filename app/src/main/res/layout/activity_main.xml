@@ -27,7 +27,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:navigationIcon="@drawable/ic_menu"
-                app:title="@string/app_name" />
+                app:title="@string/app_name"
+                />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -44,7 +45,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:scrollbarAlwaysDrawVerticalTrack="true">
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        app:menu="@menu/drawer_menu">
 
     </com.google.android.material.navigation.NavigationView>
 
