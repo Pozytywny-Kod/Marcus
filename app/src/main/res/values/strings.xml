@@ -39,6 +39,14 @@
     <string name="add_position">Dodaj pozycję</string>
     <string name="item_name">Nazwa produktu</string>
     <string name="price_hint">cena</string>
+    <string name="amount">Kwota:</string>
+    <string name="amount_value">1299,99</string>
+    <string name="nip">123456789</string>
+    <string name="place">IKEA Targówek</string>
+    <string name="shoes">Kapcie</string>
+    <string name="shoes_price">19,99 PLN</string>
+    <string name="last_projects_label">Ostatnie projekty</string>
+    <string name="dashboard">Strona główna</string>
 
     <string-array name="currencies">
         <item>PLN</item>

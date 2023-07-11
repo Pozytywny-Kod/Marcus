@@ -1,8 +1,8 @@
 package pl.grygol.projectmarcus
 
+import CameraFragment
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
+import android.util.Log
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
@@ -12,21 +12,38 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import pl.grygol.projectmarcus.adapters.ExpandableListAdapter
+import pl.grygol.projectmarcus.data.DataSource
+import pl.grygol.projectmarcus.data.database.Database
+import pl.grygol.projectmarcus.data.database.model.ExpenseEntity
+import pl.grygol.projectmarcus.data.database.model.ProjectWithExpenses
+import pl.grygol.projectmarcus.databinding.ActivityMainBinding
 import pl.grygol.projectmarcus.fragments.DashboardFragment
+import pl.grygol.projectmarcus.fragments.ExpenseDetailsFragment
+import pl.grygol.projectmarcus.fragments.NewExpenseFormFragment
 import pl.grygol.projectmarcus.fragments.ProjectDetailsFragment
 import pl.grygol.projectmarcus.interfaces.Navigable
-import pl.grygol.projectmarcus.databinding.ActivityMainBinding
-import pl.grygol.projectmarcus.fragments.NewExpenseFormFragment
-import pl.grygol.projectmarcus.interfaces.Navigable.Destination.*
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.Camera
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.Dashboard
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.ExpenseDetails
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.MainDashboard
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.NewExpense
+import pl.grygol.projectmarcus.interfaces.Navigable.Destination.ProjectDetails
+import kotlin.collections.set
+import kotlin.concurrent.thread
 
-class MainActivity : AppCompatActivity(),Navigable {
+private const val TAG = "MainActivity"
+
+class MainActivity : AppCompatActivity(), Navigable {
 
     private lateinit var projectDetailsFragment: ProjectDetailsFragment
     private lateinit var dashboardFragment: DashboardFragment
     private lateinit var newExpenseFormFragment: NewExpenseFormFragment
+    private lateinit var expenseDetailsFragment: ExpenseDetailsFragment
+    private lateinit var cameraFragment: CameraFragment
     private lateinit var binding: ActivityMainBinding
     private lateinit var expandableListAdapter: ExpandableListAdapter
     private lateinit var toolbar: Toolbar
+    private lateinit var database: Database
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,29 +51,29 @@ class MainActivity : AppCompatActivity(),Navigable {
         binding = ActivityMainBinding.inflate(layoutInflater).apply {
             setContentView(root)
         }
+
+        database = Database.open(this)
+
         setupViews()
         setupToolbar()
         setupNavigationDrawer()
+
+        navigate(Navigable.Destination.MainDashboard)
 
     }
 
     private fun setupViews() {
         expandableListAdapter = ExpandableListAdapter(this, prepareExpandableListData())
 
-        val headerView =
-            LayoutInflater.from(this).inflate(R.layout.nav_header, binding.drawerLayout, false)
-        binding.expandableListView.addHeaderView(headerView)
-        binding.expandableListView.setAdapter(expandableListAdapter)
-
         dashboardFragment = DashboardFragment()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
-            .commit()
         newExpenseFormFragment = NewExpenseFormFragment()
+        expenseDetailsFragment = ExpenseDetailsFragment()
+        cameraFragment = CameraFragment()
+        projectDetailsFragment = ProjectDetailsFragment()
     }
 
     private fun setupToolbar() {
-        toolbar = binding.toolbar
+        toolbar = binding.topAppBar
         setSupportActionBar(toolbar)
     }
 
@@ -68,11 +85,57 @@ class MainActivity : AppCompatActivity(),Navigable {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
+        onCreateOptionsMenu(binding.drawerNavigationView.menu)
+
+        binding.drawerNavigationView.menu.apply {
+            var projects: List<ProjectWithExpenses>
+            var expenses: List<ExpenseEntity>
+            thread {
+                projects = retrieveProjects()
+                expenses = retrieveExpenses()
+
+                runOnUiThread {
+                    findItem(R.id.first_section_header)?.apply {
+                        setOnMenuItemClickListener {
+                            navigate(MainDashboard)
+                            binding.drawerLayout.close()
+                            true
+                        }
+                    }
+
+                    //Last Projects menu section
+                    addSubMenu(R.string.last_projects_label).apply {
+                        Log.d(TAG, "onCreateOptionsMenu: $projects")
+                        projects.forEach { project ->
+                            this?.add(project.project.name).apply {
+                                this?.setOnMenuItemClickListener {
+                                    DataSource.currentProjectWithExpenses =
+                                        project
+                                    navigate(ProjectDetails)
+                                    binding.drawerLayout.close()
+                                    true
+                                }
+                            }
+                        }
+                    }
+
+                    //Expenses menu section
+                    addSubMenu(R.string.last_expenses_label).apply {
+                        expenses.forEach { expense ->
+                            this?.add(expense.title).apply {
+                                this?.setOnMenuItemClickListener {
+                                    DataSource.currentExpense = expense
+                                    navigate(ExpenseDetails)
+                                    binding.drawerLayout.close()
+                                    true
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,6 +143,10 @@ class MainActivity : AppCompatActivity(),Navigable {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    private fun retrieveProjects(): List<ProjectWithExpenses> = database.projects.getLatest(5)
+
+    private fun retrieveExpenses(): List<ExpenseEntity> = database.expenses.getLatest(5)
 
     private fun prepareExpandableListData(): LinkedHashMap<String, List<String>> {
         val listData = LinkedHashMap<String, List<String>>()
@@ -102,12 +169,18 @@ class MainActivity : AppCompatActivity(),Navigable {
     override fun navigate(to: Navigable.Destination) {
         supportFragmentManager.beginTransaction().apply {
             when (to) {
+                MainDashboard -> {
+                    replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
+
+                }
+
                 Dashboard -> {
                     replace(R.id.container, dashboardFragment, dashboardFragment.javaClass.name)
                     addToBackStack(projectDetailsFragment.javaClass.name)
                 }
 
                 ProjectDetails -> {
+                    projectDetailsFragment.reloadData()
                     replace(
                         R.id.container,
                         projectDetailsFragment,
@@ -123,6 +196,27 @@ class MainActivity : AppCompatActivity(),Navigable {
                         newExpenseFormFragment.javaClass.name
                     )
                     addToBackStack(newExpenseFormFragment.javaClass.name)
+                }
+
+                ExpenseDetails -> {
+                    expenseDetailsFragment.reloadData()
+                    Log.d(TAG, "navigate: expense currentFragment is null")
+                    replace(
+                        R.id.container,
+                        expenseDetailsFragment,
+                        expenseDetailsFragment.javaClass.name
+                    )
+                    addToBackStack(expenseDetailsFragment.javaClass.name)
+
+                }
+
+                Camera -> {
+                    replace(
+                        R.id.container,
+                        cameraFragment,
+                        cameraFragment.javaClass.name
+                    )
+                    addToBackStack(cameraFragment.javaClass.name)
                 }
             }.commit()
         }
